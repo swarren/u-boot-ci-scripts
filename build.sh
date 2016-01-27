@@ -34,8 +34,11 @@ mkdir -p "${build_dir}"
 
 arm=0
 arm64=0
+sandbox=0
 
-if [ "${u_boot_board}" != "sandbox" ]; then
+if [ "${u_boot_board}" = "sandbox" ]; then
+  sandbox=1
+else
   set +e
   grep -qP 'CONFIG_TEGRA(20|30|114|124)=' "src/u-boot/configs/${u_boot_board}_defconfig"
   ret=$?
@@ -74,6 +77,9 @@ if [ ${arm64} -eq 1 ]; then
   artifact_files+=("${build_dir}/u-boot.bin")
   artifact_files+=("${build_dir}/u-boot.dtb")
   artifact_files+=("${build_dir}/u-boot-dtb.bin")
+fi
+if [ ${sandbox} -eq 1 ]; then
+  artifact_files+=("${build_dir}/arch/sandbox/dts/test.dtb")
 fi
 tar -cvf "${artifacts_out_dir}/artifacts-build-results.tar" "${artifact_files[@]}"
 
