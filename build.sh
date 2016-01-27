@@ -84,7 +84,20 @@ fi
 tar -cvf "${artifacts_out_dir}/artifacts-build-results.tar" "${artifact_files[@]}"
 
 if [ -d "src/u-boot/test/py" ]; then
-  tar -cvf "${artifacts_out_dir}/artifacts-build-test-py.tar" "src/u-boot/test/py"
+  artifact_files=()
+  artifact_files+=("src/u-boot/test/py")
+
+  optional=(
+    "src/u-boot/tools/logos/denx-comp.bmp"
+    "src/u-boot/tools/logos/denx.bmp"
+  )
+  for f in "${optional[@]}"; do
+    if [ -f "${f}" ]; then
+      artifact_files+=("${f}")
+    fi
+  done
+
+  tar -cvf "${artifacts_out_dir}/artifacts-build-test-py.tar" "${artifact_files[@]}"
 else
   echo WARNING: Using substitute u-boot/test/py archive
   cp "`dirname $0`/artifacts-build-test-py.tar" "${artifacts_out_dir}/artifacts-build-test-py.tar"
