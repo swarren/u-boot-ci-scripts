@@ -57,8 +57,14 @@ if [ ${arm64} -eq 1 ]; then
     export CROSS_COMPILE=aarch64-linux-gnu-
 fi
 
-sed -i -e 's/V_PROMPT/CONFIG_SYS_PROMPT/' "src/u-boot/include/configs/${u_boot_board}.h"
-sed -i -e '/V_PROMPT/d' "src/u-boot/include/configs/tegra-common.h"
+set +e
+grep -qP "V_PROMPT" "src/u-boot/include/configs/tegra-common.h"
+ret=$?
+set -e
+if [ ${ret} -eq 0 ]; then
+  sed -i -e 's/V_PROMPT/CONFIG_SYS_PROMPT/' "src/u-boot/include/configs/${u_boot_board}.h"
+  sed -i -e '/V_PROMPT/d' "src/u-boot/include/configs/tegra-common.h"
+fi
 
 make -C src/u-boot O="`pwd`/${build_dir}" "${u_boot_board}_defconfig"
 make -C src/u-boot O="`pwd`/${build_dir}" -j8
