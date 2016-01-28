@@ -38,14 +38,23 @@ ubtest_py_dir="${ubtest_dir}/py"
 tar -xvf "${artifacts_in_dir}/artifacts-build-results.tar"
 tar -xvf "${artifacts_in_dir}/artifacts-build-test-py.tar"
 
+export PATH="`pwd`/${ubtest_bin_dir}:${PATH}"
+export PYTHONPATH="`pwd`/${ubtest_py_dir}/`hostname`:${PYTHONPATH}"
+
+if [ "${u_boot_board}" != sandbox ]; then
+  u-boot-test-power-on "${u_boot_board}" na
+fi
+
 set +e
-PATH="`pwd`/${ubtest_bin_dir}:${PATH}" \
-  PYTHONPATH="`pwd`/${ubtest_py_dir}/`hostname`:${PYTHONPATH}" \
-  ./src/u-boot/test/py/test.py --bd "${u_boot_board}" --build-dir "`pwd`/${build_dir}"
+./src/u-boot/test/py/test.py --bd "${u_boot_board}" --build-dir "`pwd`/${build_dir}"
 ret=$?
 set +e
 
 cp "${build_dir}/test-log.html" "${artifacts_out_dir}" || true
 cp "${build_dir}/multiplexed_log.css" "${artifacts_out_dir}" || true
+
+if [ "${u_boot_board}" != sandbox ]; then
+  u-boot-test-power-off "${u_boot_board}" na
+fi
 
 exit ${ret}
