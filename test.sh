@@ -40,7 +40,7 @@ tar -xvf "${artifacts_in_dir}/artifacts-build-test-py.tar"
 
 set +e
 PATH="`pwd`/${ubtest_bin_dir}:${PATH}" \
-  PYTHONPATH="`pwd`/${ubtest_py_dir}:${PYTHONPATH}" \
+  PYTHONPATH="`pwd`/${ubtest_py_dir}/`hostname`:${PYTHONPATH}" \
   ./src/u-boot/test/py/test.py --bd "${u_boot_board}" --build-dir "`pwd`/${build_dir}"
 ret=$?
 set +e
