@@ -87,6 +87,14 @@ fi
 if [ ${sandbox} -eq 1 ]; then
   artifact_files+=("${build_dir}/arch/sandbox/dts/test.dtb")
 fi
+optional=(
+  "${build_dir}/u-boot.syms"
+)
+for f in "${optional[@]}"; do
+  if [ -f "${f}" ]; then
+    artifact_files+=("${f}")
+  fi
+done
 tar -cvf "${artifacts_out_dir}/artifacts-build-results.tar" "${artifact_files[@]}"
 
 if [ -d "src/u-boot/test/py" ]; then
