@@ -30,7 +30,7 @@ rm -rf "${artifacts_out_dir}"
 mkdir -p "${artifacts_out_dir}"
 
 artifacts_in_dir="artifacts-in"
-build_dir="build/u-boot"
+build_dir="build/u-boot/${u_boot_board}"
 ubtest_dir="src/uboot-test-hooks"
 ubtest_bin_dir="${ubtest_dir}/bin"
 ubtest_py_dir="${ubtest_dir}/py"

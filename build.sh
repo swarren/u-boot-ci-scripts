@@ -25,11 +25,11 @@ set -x
 
 u_boot_board="$1"
 
-artifacts_out_dir="artifacts-out"
+artifacts_out_dir="artifacts-out/${u_boot_board}"
 rm -rf "${artifacts_out_dir}"
 mkdir -p "${artifacts_out_dir}"
 
-build_dir="build/u-boot"
+build_dir="build/u-boot/${u_boot_board}"
 mkdir -p "${build_dir}"
 
 arm=0
