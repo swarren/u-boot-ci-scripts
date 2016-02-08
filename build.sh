@@ -88,7 +88,7 @@ if [ ${sandbox} -eq 1 ]; then
   artifact_files+=("${build_dir}/arch/sandbox/dts/test.dtb")
 fi
 optional=(
-  "${build_dir}/u-boot.syms"
+  "${build_dir}/u-boot.sym"
 )
 for f in "${optional[@]}"; do
   if [ -f "${f}" ]; then
