@@ -25,6 +25,22 @@ set -x
 
 u_boot_board="$1"
 
+if [ "${u_boot_board}" != sandbox ]; then
+    if [ -n "${REEXEC_UNDER_EIMT_SLURM}" ]; then
+        case "${u_boot_board}" in
+        p2371-0000)
+            slurm_license="board-tegra210-p2371-0000*1"
+            ;;
+        *)
+            echo CANNOT MAP "${u_boot_board}" to slurm license
+            exit 1
+            ;;
+        esac
+        unset REEXEC_UNDER_EIMT_SLURM
+        exec salloc -s -L "${slurm_license}" -p boot $0 "$@"
+    fi
+fi
+
 artifacts_out_dir="artifacts-out"
 rm -rf "${artifacts_out_dir}"
 mkdir -p "${artifacts_out_dir}"
