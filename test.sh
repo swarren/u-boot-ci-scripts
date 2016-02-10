@@ -71,6 +71,8 @@ ubtest_dir="src/uboot-test-hooks"
 ubtest_bin_dir="${ubtest_dir}/bin"
 ubtest_py_dir="${ubtest_dir}/py"
 
+rm -rf "${build_dir}"
+rm -rf src/u-boot
 tar -xvf "${artifacts_in_dir}/artifacts-build-results.tar"
 tar -xvf "${artifacts_in_dir}/artifacts-build-test-py.tar"
 
