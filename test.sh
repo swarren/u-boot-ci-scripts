@@ -57,7 +57,7 @@ if [ "${u_boot_board}" != sandbox ]; then
             ;;
         esac
         unset REEXEC_UNDER_EIMT_SLURM
-        exec salloc -s -L "${slurm_license}" -p boot $0 "$@"
+        exec salloc -s -L "${slurm_license}" -p boot -J "${BUILD_TAG}" $0 "$@"
     fi
 fi
 
