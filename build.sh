@@ -69,46 +69,5 @@ fi
 make -C src/u-boot O="`pwd`/${build_dir}" "${u_boot_board}_defconfig"
 make -C src/u-boot O="`pwd`/${build_dir}" -j8
 
-artifact_files=()
-artifact_files+=("${build_dir}/u-boot")
-artifact_files+=("${build_dir}/.config")
-artifact_files+=("${build_dir}/include/autoconf.mk")
-if [ ${arm} -eq 1 ]; then
-  artifact_files+=("${build_dir}/spl/u-boot-spl")
-  artifact_files+=("${build_dir}/u-boot-nodtb-tegra.bin")
-  artifact_files+=("${build_dir}/u-boot.dtb")
-  artifact_files+=("${build_dir}/u-boot-dtb-tegra.bin")
-fi
-if [ ${arm64} -eq 1 ]; then
-  artifact_files+=("${build_dir}/u-boot.bin")
-  artifact_files+=("${build_dir}/u-boot.dtb")
-  artifact_files+=("${build_dir}/u-boot-dtb.bin")
-fi
-if [ ${sandbox} -eq 1 ]; then
-  artifact_files+=("${build_dir}/arch/sandbox/dts/test.dtb")
-fi
-optional=()
-optional+=("${build_dir}/dev.crt")
-optional+=("${build_dir}/dev.key")
-optional+=("${build_dir}/test.fit")
-optional+=("${build_dir}/test-kernel.bin")
-optional+=("${build_dir}/u-boot.sym")
-for f in "${optional[@]}"; do
-  if [ -f "${f}" ]; then
-    artifact_files+=("${f}")
-  fi
-done
-tar -cvf "${artifacts_out_dir}/artifacts-build-results.tar" "${artifact_files[@]}"
-
-artifact_files=()
-artifact_files+=("src/u-boot/test/py")
-optional=(
-  "src/u-boot/tools/logos/denx-comp.bmp"
-  "src/u-boot/tools/logos/denx.bmp"
-)
-for f in "${optional[@]}"; do
-  if [ -f "${f}" ]; then
-    artifact_files+=("${f}")
-  fi
-done
-tar -cvf "${artifacts_out_dir}/artifacts-build-test-py.tar" "${artifact_files[@]}"
+tar -cvf "${artifacts_out_dir}/artifacts-build-src.tar" "src/u-boot"
+tar -cvf "${artifacts_out_dir}/artifacts-build-results.tar" "${build_dir}"
