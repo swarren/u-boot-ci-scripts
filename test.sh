@@ -71,9 +71,10 @@ ubtest_dir="src/uboot-test-hooks"
 ubtest_bin_dir="${ubtest_dir}/bin"
 ubtest_py_dir="${ubtest_dir}/py"
 
-rm -rf src/u-boot
+u_boot_commit=$(cat "${artifacts_in_dir}/artifacts-build-u-boot-commit.txt")
+git -C src/u-boot checkout ${u_boot_commit}
+
 rm -rf "${build_dir}"
-tar -jxvf "${artifacts_in_dir}/artifacts-build-src.tar.bz2"
 tar -jxvf "${artifacts_in_dir}/artifacts-build-results.tar.bz2"
 
 export PATH="`pwd`/${ubtest_bin_dir}:${PATH}"
