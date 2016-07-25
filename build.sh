@@ -69,5 +69,5 @@ fi
 make -C src/u-boot O="`pwd`/${build_dir}" "${u_boot_board}_defconfig"
 make -C src/u-boot O="`pwd`/${build_dir}" -j8
 
-tar -cvf "${artifacts_out_dir}/artifacts-build-src.tar" "src/u-boot"
-tar -cvf "${artifacts_out_dir}/artifacts-build-results.tar" "${build_dir}"
+tar -jcvf "${artifacts_out_dir}/artifacts-build-src.tar.bz2" "src/u-boot"
+tar -jcvf "${artifacts_out_dir}/artifacts-build-results.tar.bz2" "${build_dir}"

@@ -73,8 +73,8 @@ ubtest_py_dir="${ubtest_dir}/py"
 
 rm -rf src/u-boot
 rm -rf "${build_dir}"
-tar -xvf "${artifacts_in_dir}/artifacts-build-src.tar"
-tar -xvf "${artifacts_in_dir}/artifacts-build-results.tar"
+tar -jxvf "${artifacts_in_dir}/artifacts-build-src.tar.bz2"
+tar -jxvf "${artifacts_in_dir}/artifacts-build-results.tar.bz2"
 
 export PATH="`pwd`/${ubtest_bin_dir}:${PATH}"
 export PYTHONPATH="`pwd`/${ubtest_py_dir}/`hostname`:${PYTHONPATH}"
