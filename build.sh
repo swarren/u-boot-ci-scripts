@@ -66,6 +66,8 @@ if [ ${ret} -eq 0 ]; then
   sed -i -e '/V_PROMPT/d' "src/u-boot/include/configs/tegra-common.h"
 fi
 
+export PATH="${HOME}/dtc-1.4.3:${PATH}"
+
 make -C src/u-boot O="`pwd`/${build_dir}" "${u_boot_board}_defconfig"
 make -C src/u-boot O="`pwd`/${build_dir}" -j8
 
