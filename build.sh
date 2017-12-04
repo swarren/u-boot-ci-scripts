@@ -51,10 +51,10 @@ else
 fi
 
 if [ ${arm} -eq 1 ]; then
-    export CROSS_COMPILE=arm-none-eabi-
+    export CROSS_COMPILE="${HOME}/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-"
 fi
 if [ ${arm64} -eq 1 ]; then
-    export CROSS_COMPILE=aarch64-linux-gnu-
+    export CROSS_COMPILE="${HOME}/gcc-linaro-7.2.1-2017.11-i686_aarch64-linux-gnu/bin/aarch64-linux-gnu-"
 fi
 
 set +e
