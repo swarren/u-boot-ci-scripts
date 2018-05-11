@@ -77,8 +77,8 @@ if [ ${ret} -eq 0 ]; then
   sed -i -e '/V_PROMPT/d' "src/u-boot/include/configs/tegra-common.h"
 fi
 
-if [ -f "configs/${u_boot_board}_defconfig" ]; then
-  echo 'CONFIG_BOOTDELAY=15' >> "configs/${u_boot_board}_defconfig"
+if [ -f "src/u-boot/configs/${u_boot_board}_defconfig" ]; then
+  echo 'CONFIG_BOOTDELAY=15' >> "src/u-boot/configs/${u_boot_board}_defconfig"
 fi
 
 export PATH="${HOME}/dtc-1.4.3:${PATH}"
