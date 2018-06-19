@@ -24,7 +24,8 @@ set -e
 set -x
 
 u_boot_board="$1"
-compiler="$2"
+compiler_arm="$2"
+compiler_aarch64="$3"
 
 artifacts_out_dir="artifacts-out/${u_boot_board}"
 rm -rf "${artifacts_out_dir}"
@@ -51,21 +52,11 @@ else
   fi
 fi
 
-if [ "${compiler}" = "system" ]; then
-  if [ ${arm} -eq 1 ]; then
-    export CROSS_COMPILE=arm-none-eabi-
-  fi
-  if [ ${arm64} -eq 1 ]; then
-    export CROSS_COMPILE=aarch64-linux-gnu-
-  fi
+if [ ${arm} -eq 1 ]; then
+  export CROSS_COMPILE="${compiler_arm}"
 fi
-if [ "${compiler}" = "linaro-7.2.1-2017.11" ]; then
-  if [ ${arm} -eq 1 ]; then
-      export CROSS_COMPILE="${HOME}/gcc-linaro-7.2.1-2017.11-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-"
-  fi
-  if [ ${arm64} -eq 1 ]; then
-      export CROSS_COMPILE="${HOME}/gcc-linaro-7.2.1-2017.11-i686_aarch64-linux-gnu/bin/aarch64-linux-gnu-"
-  fi
+if [ ${arm64} -eq 1 ]; then
+  export CROSS_COMPILE="${compiler_aarch64}"
 fi
 
 set +e
