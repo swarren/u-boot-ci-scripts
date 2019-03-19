@@ -25,42 +25,6 @@ set -x
 
 u_boot_board="$1"
 
-if [ "${u_boot_board}" != sandbox ]; then
-    if [ -n "${REEXEC_UNDER_EIMT_SLURM}" ]; then
-        case "${u_boot_board}" in
-        beaver)
-            slurm_license="board-tegra30-beaver*1"
-            ;;
-        dalmore)
-            slurm_license="board-tegra114-dalmore-a04*1"
-            ;;
-        jetson-tk1)
-            slurm_license="board-tegra124-jetson-tk1*1"
-            ;;
-        p2371-0000)
-            slurm_license="board-tegra210-p2371-0000*1"
-            ;;
-        p2371-2180)
-            # At the time of writing, not present in EIMT.
-            # However, adding it pro-actively since it may be in the future.
-            slurm_license="board-tegra210-p2371-2180*1"
-            ;;
-        trimslice)
-            slurm_license="board-tegra20-trimslice*1"
-            ;;
-        venice2)
-            slurm_license="board-tegra124-venice2*1"
-            ;;
-        *)
-            echo CANNOT MAP "${u_boot_board}" to slurm license
-            exit 1
-            ;;
-        esac
-        unset REEXEC_UNDER_EIMT_SLURM
-        exec salloc -s -L "${slurm_license}" -p boot -J "${BUILD_TAG}" $0 "$@"
-    fi
-fi
-
 artifacts_out_dir="artifacts-out"
 rm -rf "${artifacts_out_dir}"
 mkdir -p "${artifacts_out_dir}"
