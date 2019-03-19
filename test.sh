@@ -49,7 +49,7 @@ if [ "${u_boot_board}" != sandbox ]; then
 fi
 
 set +e
-./src/u-boot/test/py/test.py --bd "${u_boot_board}" --build-dir "$(pwd)/${build_dir}"
+./src/u-boot/test/py/test.py --bd "${u_boot_board}" --build-dir "$(pwd)/${build_dir}" -k "not sleep"
 ret=$?
 set +e
 
