@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2016, NVIDIA CORPORATION. All rights reserved.
+# Copyright (c) 2016-2019, NVIDIA CORPORATION. All rights reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -74,8 +74,8 @@ fi
 
 export PATH="${HOME}/dtc-1.4.3:${PATH}"
 
-make -C src/u-boot O="`pwd`/${build_dir}" "${u_boot_board}_defconfig"
-make -C src/u-boot O="`pwd`/${build_dir}" -j8
+make -C src/u-boot O="$(pwd)/${build_dir}" "${u_boot_board}_defconfig"
+make -C src/u-boot O="$(pwd)/${build_dir}" -j8
 
 git -C src/u-boot rev-parse HEAD > "${artifacts_out_dir}/artifacts-build-u-boot-commit.txt"
 tar -jcvf "${artifacts_out_dir}/artifacts-build-results.tar.bz2" "${build_dir}"

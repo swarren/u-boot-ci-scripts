@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2016, NVIDIA CORPORATION. All rights reserved.
+# Copyright (c) 2016-2019, NVIDIA CORPORATION. All rights reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -77,15 +77,15 @@ git -C src/u-boot checkout ${u_boot_commit}
 rm -rf "${build_dir}"
 tar -jxvf "${artifacts_in_dir}/artifacts-build-results.tar.bz2"
 
-export PATH="`pwd`/${ubtest_bin_dir}:${PATH}"
-export PYTHONPATH="`pwd`/${ubtest_py_dir}/`hostname`:${PYTHONPATH}"
+export PATH="$(pwd)/${ubtest_bin_dir}:${PATH}"
+export PYTHONPATH="$(pwd)/${ubtest_py_dir}/$(hostname):${PYTHONPATH}"
 
 if [ "${u_boot_board}" != sandbox ]; then
   u-boot-test-power-on "${u_boot_board}" na
 fi
 
 set +e
-./src/u-boot/test/py/test.py --bd "${u_boot_board}" --build-dir "`pwd`/${build_dir}"
+./src/u-boot/test/py/test.py --bd "${u_boot_board}" --build-dir "$(pwd)/${build_dir}"
 ret=$?
 set +e
 
