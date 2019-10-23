@@ -31,6 +31,9 @@ mkdir -p "${artifacts_out_dir}"
 
 artifacts_in_dir="artifacts-in"
 build_dir="build/u-boot/${u_boot_board}"
+# Don't put this in e.g. ./build/venv/${u_boot_board}; the #! line will become
+# so long that the kernel truncates it and can't find the Python interpreter:-(
+venv_dir="/tmp/venv-$$"
 ubtest_dir="src/uboot-test-hooks"
 ubtest_bin_dir="${ubtest_dir}/bin"
 ubtest_py_dir="${ubtest_dir}/py"
@@ -44,6 +47,13 @@ tar -jxvf "${artifacts_in_dir}/artifacts-build-results.tar.bz2"
 export PATH="$(pwd)/${ubtest_bin_dir}:${PATH}"
 export PYTHONPATH="$(pwd)/${ubtest_py_dir}/$(hostname):${PYTHONPATH}"
 
+if [ -f ./src/u-boot/test/py/requirements.txt ]; then
+    rm -rf "${venv_dir}"
+    virtualenv -p /usr/bin/python3 "${venv_dir}"
+    . "${venv_dir}/bin/activate"
+    pip install -r ./src/u-boot/test/py/requirements.txt
+fi
+
 if [ "${u_boot_board}" != sandbox ]; then
   u-boot-test-power-on "${u_boot_board}" na
 fi
@@ -51,6 +61,7 @@ fi
 set +e
 ./src/u-boot/test/py/test.py --bd "${u_boot_board}" --build-dir "$(pwd)/${build_dir}" -k "not sleep"
 ret=$?
+rm -rf "${venv_dir}"
 set +e
 
 cp "${build_dir}/test-log.html" "${artifacts_out_dir}" || true
