@@ -74,6 +74,11 @@ fi
 
 export PATH="${HOME}/dtc-1.4.3:${PATH}"
 
+# Get rid of e.g. any cached Python files from previous builds.
+# Ideally we'd do this once per overall Jenkins job, rather than once for each
+# entry in the configuration matrix, but there doesn't seem to be a way to do
+# that.
+git -C src/u-boot clean -fdx
 make -C src/u-boot O="$(pwd)/${build_dir}" "${u_boot_board}_defconfig"
 make -C src/u-boot O="$(pwd)/${build_dir}" -j8
 
