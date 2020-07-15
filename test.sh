@@ -23,6 +23,8 @@
 set -e
 set -x
 
+script_dir="$(cd "$(dirname "$0")" && pwd)"
+
 u_boot_board="$1"
 
 artifacts_out_dir="artifacts-out"
@@ -44,7 +46,7 @@ git -C src/u-boot checkout ${u_boot_commit}
 rm -rf "${build_dir}"
 tar -jxvf "${artifacts_in_dir}/artifacts-build-results.tar.bz2"
 
-export PATH="$(pwd)/${ubtest_bin_dir}:${PATH}"
+export PATH="${script_dir}/tools:$(pwd)/${ubtest_bin_dir}:${PATH}"
 export PYTHONPATH="$(pwd)/${ubtest_py_dir}/$(hostname):${PYTHONPATH}"
 
 if [ -f ./src/u-boot/test/py/requirements.txt ]; then
