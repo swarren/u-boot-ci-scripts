@@ -1,5 +1,5 @@
 The dfu-util binary in this directory was built from:
-https://github.com/swarren/dfu-util
+https://github.com/swarren/dfu-util 0249fdbce205
 The following license applies:
 
 		    GNU GENERAL PUBLIC LICENSE
