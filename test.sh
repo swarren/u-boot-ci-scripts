@@ -50,9 +50,17 @@ export PATH="${script_dir}/tools:$(pwd)/${ubtest_bin_dir}:${PATH}"
 export PYTHONPATH="$(pwd)/${ubtest_py_dir}/$(hostname):${PYTHONPATH}"
 
 if [ -f ./src/u-boot/test/py/requirements.txt ]; then
+    os_release=$(lsb_release -a 2>/dev/null|grep ^Codename:|awk '{print $2}')
+    nopip=
+    if [ "${os_release}" == "xenial" ]; then
+        nopip=--no-pip
+    fi
     rm -rf "${venv_dir}"
-    virtualenv -p /usr/bin/python3 "${venv_dir}"
+    virtualenv -p /usr/bin/python3 ${nopip} "${venv_dir}"
     . "${venv_dir}/bin/activate"
+    if [ "${os_release}" == "xenial" ]; then
+        python "${script_dir}/get-pip.py" pip==20.3.4
+    fi
     pip install -r ./src/u-boot/test/py/requirements.txt
 fi
 
